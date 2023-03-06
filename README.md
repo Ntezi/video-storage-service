@@ -5,7 +5,7 @@ This challenge is about creating a simple video storage server with REST APIs
 ## Details
 
 You are tasked to develop a simple video storage server with REST APIs, which should have:
-- **CRUD implemention** as described in the [Open API definition](./api.yaml). (This document only contains the minimum and may need to be added).
+- **CRUD implemention** as described in the [Open API definition](src/swagger/api.yaml). (This document only contains the minimum and may need to be added).
 - **Dockerfile** and **docker-compose** to build and run the server and other required services as docker containers.
 - The endpoints of the server are exposed to the host machine.
 
@@ -29,7 +29,7 @@ We understand taking a challenge is time consuming, so feel free to choose an ad
 
 ⚠️ **Note #1**: the CI/CD runs checks against a set of tests necessary to consider the assigment correct. _Without a green check we won't review the challenge_ as we can safely assume the overall solution is incomplete. Also, please *DO NOT* change the CI/CD workflow file _or_ the `test/tester.json` file - if you want to add your own tests, please add them in a dedicated folder of your choice.
 
-⚠️ **Note #2**: if you add or change APIs, include its OpenAPI document. However, please note that your server may be accessed by external clients in accordance with the given OpenAPI document and automated tests will hit the endpoints as described in [api.yaml](./api.yaml), therefore any change in the base path could result in 404 or false negative.
+⚠️ **Note #2**: if you add or change APIs, include its OpenAPI document. However, please note that your server may be accessed by external clients in accordance with the given OpenAPI document and automated tests will hit the endpoints as described in [api.yaml](src/swagger/api.yaml), therefore any change in the base path could result in 404 or false negative.
 
 ## FAQ
 _Questions outside of this FAQ will not be answered. Please include them with your challenge submission and they can be covered in the technical interview stage._
@@ -47,7 +47,7 @@ No. As long as the CI pipeline doesn’t complain we don’t have requirements.
 
 Code quality, folder structure and software development principles are considered during the solution review. Naming variables “xyz” is usually a minus even if the solution is correct.
 
-**Where should I store the files? File system or database?**
+**Where should I store the files? VideoFile system or database?**
 
 That’s up to you. A local storage is preferred to a remote one (S3 needs keys for example), but there’s no strong preference between file system and database as long as the API requirements are satisfied. 
 
