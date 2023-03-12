@@ -1,11 +1,12 @@
 import {EntityManager,} from "typeorm";
-import {VideoFile} from '../entities'
-import {CreateFileDto} from '../dtos';
 import Logger from "../utils/Logger";
 import {HelperFunctions, RedisClient} from "../utils";
 import VideoStorageDataSource from "../configs/db/VideoStorageDataSource";
+import {CreateVideoFileDto} from "../dtos/CreateVideoFileDto";
+import {VideoFile} from "../entities/VideoFile";
+import {v4 as uuid} from 'uuid';
 
-class FileDao {
+class VideoFileDao {
 	manager: EntityManager;
 	duration: number
 	fileKeyPattern: string;
@@ -41,7 +42,7 @@ class FileDao {
 		}
 	}
 
-	async getFile(fileId: number) {
+	async getFile(fileId: string) {
 		try {
 			return await this.manager.getRepository(VideoFile).findOne({
 				where: {file_id : fileId},
@@ -57,19 +58,35 @@ class FileDao {
 		}
 	}
 
-	async createFile(createFileDto: CreateFileDto) {
+	async createFile(createVideoFileDto: CreateVideoFileDto) {
 		try {
 			await RedisClient.deleteKeys(this.fileKeyPattern)
 			const file = new VideoFile()
-			file.file_name = createFileDto.name
-			return await this.manager.getRepository(VideoFile).save({...file, ...createFileDto})
+			file.file_id = createVideoFileDto.file_name;
+			return await this.manager.getRepository(VideoFile).save({...file, ...createVideoFileDto})
 		} catch (error) { // Catch the error and pass it to handlePostgresError
 			await HelperFunctions.handlePostgresError(error)
 			return null; // return null in case of an error
 		}
 	}
 
-	async remove(fileId: number) {
+	getVideoFileByName(fileName: string) {
+		try {
+			return this.manager.getRepository(VideoFile).find({
+				where: {file_name: fileName},
+				cache: {
+					id: `file:detail:${fileName}`,
+					milliseconds: this.duration,
+				},
+			});
+		} catch (error) {
+			// Catch the error and pass it to handlePostgresError
+			HelperFunctions.handlePostgresError(error)
+			return null; // return null in case of an error
+		}
+	}
+
+	async remove(fileId: string) {
 		try {
 			await RedisClient.deleteKeys(this.fileKeyPattern)
 			const fileRepository = this.manager.getRepository(VideoFile);
@@ -80,39 +97,6 @@ class FileDao {
 		}
 	}
 
-	async saveMultipleFiles(fileData: Buffer) {
-		try {
-			await RedisClient.deleteKeys(this.fileKeyPattern);
-			const data = fileData.toString("utf-8").split('\n');
-			data.shift();
-			let files: any = [];
-
-			data.map(function (file) {
-				const elements = file.replace('\r', '').split(',');
-				if (elements.length === 2) {
-					files.push({
-						manufacture_id: 1,
-						category_id: 1,
-						file_name: elements[0],
-						price: +elements[1]
-					})
-				}
-			});
-
-			return await this.manager.getRepository(VideoFile)
-				.createQueryBuilder()
-				.insert()
-				.into(VideoFile)
-				.values(files)
-				.returning(['id', 'file_name', 'price', 'cost'])
-				.execute();
-
-		} catch (error) { // Catch the error and pass it to handlePostgresError
-			await HelperFunctions.handlePostgresError(error)
-			return null; // return an empty array in case of an error
-		}
-	}
-
 }
 
-export default new FileDao();
+export default new VideoFileDao();

@@ -1,10 +1,10 @@
 
-import {Entity, Column, CreateDateColumn, PrimaryGeneratedColumn} from "typeorm";
+import {Entity, Column, CreateDateColumn, PrimaryColumn} from "typeorm";
 
 @Entity('video_file')
 export class VideoFile {
-	@PrimaryGeneratedColumn({type: 'bigint'})
-	file_id!: number;
+	@PrimaryColumn({nullable: false, type: "uuid"})
+	file_id!: string;
 
 	@Column({nullable: false, type: 'varchar', length: 255})
 	file_name!: string;

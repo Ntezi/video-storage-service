@@ -1,43 +1,41 @@
 import express from 'express';
 import CustomResponse from "../utils/CustomResponse";
 import {StatusCodes} from "http-status-codes";
-import {FileService} from "../services";
-import {HelperFunctions} from "../utils";
+import HelperFunctions from "../utils/HelperFunctions";
+import VideoFileService from "../services/VideoFileService";
 
 class FileMiddleware {
 
-	async validateRequiredFileBodyFields(req: express.Request, res: express.Response, next: express.NextFunction) {
-		if (HelperFunctions.isExists(req.body) && HelperFunctions.isExists(req.body.file_name) ) {
-			next();
+	verifyUploadedFiles(req: express.Request, res: express.Response, next: express.NextFunction) {
+		if (!HelperFunctions.isExists(req.file)) {
+			return CustomResponse.returnErrorResponse(res, StatusCodes.BAD_REQUEST, 'No file were uploaded.');
 		} else {
-			CustomResponse.returnErrorResponse(res, StatusCodes.BAD_REQUEST, 'Missing required fields: file_name')
+			if (req.file.mimetype === 'video/mp4' || req.file.mimetype === 'video/mpeg') {
+				next();
+			} else {
+				return CustomResponse.returnErrorResponse(res, StatusCodes.UNSUPPORTED_MEDIA_TYPE, 'Unsupported Media Type');
+
+			}
 		}
 	}
+
 	async validateFileExists(req: express.Request, res: express.Response, next: express.NextFunction) {
-		const file = await FileService.detail(Number(req.params.id));
+		const file = await VideoFileService.detail(req.params.fileid);
 		if (HelperFunctions.isExists(file)) {
 			next();
 		} else {
-			CustomResponse.returnErrorResponse(res, StatusCodes.NOT_FOUND, `File with ID: ${req.params.id} Not Found`)
+			CustomResponse.returnErrorResponse(res, StatusCodes.NOT_FOUND, `File with ID: ${req.params.fileid} Not Found`)
 		}
 	}
 
-	async validateSearchQueryParameter(req: express.Request, res: express.Response, next: express.NextFunction) {
-		if (!HelperFunctions.isExists(req.query.file_name)) {
-			CustomResponse.returnErrorResponse(res, StatusCodes.BAD_REQUEST, 'Missing required query parameter: file_name')
+	async validateDuplicateFile(req: express.Request, res: express.Response, next: express.NextFunction) {
+		// @ts-ignore
+		const file = await VideoFileService.getVideoFileByName(req.file.originalname)
+		if (HelperFunctions.isExists(file)) {
+			CustomResponse.returnErrorResponse(res, StatusCodes.CONFLICT, `File already exists`)
 		} else {
 			next();
 		}
-	}
-
-	async extractFileId(req: express.Request, _res: express.Response, next: express.NextFunction) {
-		req.body.id = req.params.fileId;
-		next();
-	}
-
-	async extractFileName(req: express.Request, _res: express.Response, next: express.NextFunction) {
-		req.body.file_name = req.query.file_name;
-		next();
 	}
 }
 

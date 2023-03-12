@@ -8,20 +8,21 @@ if (dotenvResult.error) {
 import "reflect-metadata";
 import express from 'express';
 import * as path from "path";
-import {FileRoute} from "./routes";
 import {Logger, RedisClient} from "./utils";
 import {RouteConfig, ServerConfig} from "./configs";
 import VideoStorageDataSource from "./configs/db/VideoStorageDataSource";
+import {VideoFileRoute} from "./routes/VideoFileRoute";
 
 
 const app: express.Application = express();
 
 const routes: Array<RouteConfig> = [];
-const port = process.env.VIDEO_STORAGE_SERVER_PORT || 2202;
+const port = process.env.VIDEO_STORAGE_SERVER_PORT || 2207;
+
+routes.push(<RouteConfig>new VideoFileRoute(app));
 
 ServerConfig.createServer(app, path.join(__dirname, '/swagger/api.yaml'))
 	.then((server) => {
-		routes.push(<RouteConfig>new FileRoute(app));
 		server.listen(port, async () => {
 			Logger.info(`Video Storage Server is up and running at http://localhost:${port}`);
 			routes.forEach((route: RouteConfig) => {

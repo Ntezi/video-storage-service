@@ -18,12 +18,16 @@ import CustomResponse from "../utils/CustomResponse";
 import Logger from "../utils/Logger";
 import fs from "fs";
 import morgan from "morgan";
-import {CLSMiddleware, LoggerMiddleware} from "../middleware";
+import LoggerMiddleware from "../middleware/LoggerMiddleware";
+import CLSMiddleware from "../middleware/CLSMiddleware";
+import multer from "multer";
+import {StatusCodes} from "http-status-codes";
 
 
 class ServerConfig {
 
 	async createServer(app: express.Application = express(), apiSpec: string): Promise<http.Server> {
+		app.use(express.static('data/uploads/videos'));
 		app.use(CLSMiddleware.createNamespace)
 		app.use(bodyParser.json());
 		app.use(cors());
@@ -34,10 +38,10 @@ class ServerConfig {
 		app.use(express.urlencoded({extended: false}));
 
 		// create a stream (in append mode)
-		const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+		const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
 
 		// setup the logger
-		app.use(morgan('combined', { stream: accessLogStream }));
+		app.use(morgan('combined', {stream: accessLogStream}));
 
 
 		app.use((_req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -57,9 +61,13 @@ class ServerConfig {
 			})
 		);
 
-		app.use((error: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-			CustomResponse.returnErrorResponse(res, error.status, error.message)
-		});
+		// app.use((error: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+		// 	if (error instanceof multer.MulterError) {
+		// 		CustomResponse.returnErrorResponse(res, StatusCodes.UNSUPPORTED_MEDIA_TYPE, error.code)
+		// 	} else {
+		// 		CustomResponse.returnErrorResponse(res, error.status, error.message)
+		// 	}
+		// });
 
 		return http.createServer(app)
 	}

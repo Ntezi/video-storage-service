@@ -47,7 +47,7 @@ No. As long as the CI pipeline doesn’t complain we don’t have requirements.
 
 Code quality, folder structure and software development principles are considered during the solution review. Naming variables “xyz” is usually a minus even if the solution is correct.
 
-**Where should I store the files? VideoFile system or database?**
+**Where should I store the files? VideoFileDto system or database?**
 
 That’s up to you. A local storage is preferred to a remote one (S3 needs keys for example), but there’s no strong preference between file system and database as long as the API requirements are satisfied. 
 
@@ -74,4 +74,95 @@ No. That’s your repository and your main branch, we just ask you to keep your 
 
 
 Again, we appreciate you taking the time to work on this challenge and we are looking forward to your submission!
+
+
+# Video Storage Server Implementation
+
+## Structure
+
+The project is structured as follows:
+
+```
+.
+├── README.md
+├── docker-compose.yml
+├── docker-compose.ci.yml
+├── Dockerfile
+├── package.json
+├── yarn.lock
+├── tsconfig.json
+├── scripts
+│   ├── init_db.sh # Initialize the database with the schema and roles for the application
+│   └── start.sh   # Start the application and run the migrations if needed
+├── src
+│   ├── configs
+│   │   ├── CrudInterface.ts # Interface for CRUD operations
+│   │   ├── RouteConfig.tsn # Route configuration
+│   │   ├── ServerConfig.ts # Server configuration
+│   │   └── db
+│   │       ├── migrations # Database migrations
+│   │       │   └── 1645134357970-init.ts  # Initial migration to create tables
+│   │       ├── sql
+│   │       │   └── init_video_storage.sql # SQL script to create tables
+│   │       └── VideoStorageDataSource.ts # Database connection
+│   ├── controllers
+│   │   └── VideoController.ts # Controller for video endpoints
+│   ├── daos # Data access objects for database operations (CRUD)
+│   │   └── VideoFileDao.ts # Data access object for video file
+│   ├── server
+│   │   └── server.go
+│   └── storage
+│       ├── storage.go
+│       └── storage_test.go
+├── test
+│   ├── tester.json
+│   └── tester.yaml
+└── go.mod
+```
+
+## Build
+
+To build the project, run:
+
+```shell
+go build ./...
+```
+
+## Run
+
+To run the project, run:
+
+```shell
+go run ./src/server/server.go
+```
+
+## Test
+
+To run the tests, run:
+
+```shell
+go test ./...
+```
+
+## Docker Compose
+
+To start the project with Docker Compose, run:
+
+```shell
+docker-compose up --build
+```
+
+## Swagger UI
+
+To view the Swagger UI:
+
+- Run the project with Docker Compose
+- Go to http://localhost:8080/swaggerui/
+
+## Postman
+
+To view the Postman collection:
+
+- Run the project with Docker Compose
+- Go to http://localhost:8080/postman/
 
