@@ -1,8 +1,8 @@
 import express from 'express';
-import CustomResponse from "../utils/CustomResponse";
+import CustomResponse from "../../utils/CustomResponse";
 import {StatusCodes} from "http-status-codes";
-import HelperFunctions from "../utils/HelperFunctions";
-import VideoFileService from "../services/VideoFileService";
+import HelperFunctions from "../../utils/HelperFunctions";
+import VideoFileService from "../../services/v1/VideoFileService";
 
 class VideoFileMiddleware {
 

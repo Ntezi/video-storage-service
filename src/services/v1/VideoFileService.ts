@@ -1,8 +1,8 @@
-import {CreateVideoFileDto} from "../dtos/CreateVideoFileDto";
-import VideoFileDao from "../daos/VideoFileDao";
-import HelperFunctions from "../utils/HelperFunctions";
-import {VideoFileDto} from "../dtos/VideoFileDto";
-import CrudInterface from "../configs/CrudInterface";
+import {CreateVideoFileDto} from "../../dtos/v1/CreateVideoFileDto";
+import VideoFileDao from "../../daos/v1/VideoFileDao";
+import HelperFunctions from "../../utils/HelperFunctions";
+import {VideoFileDto} from "../../dtos/v1/VideoFileDto";
+import CrudInterface from "../../configs/CrudInterface";
 
 
 class VideoFileService implements CrudInterface {

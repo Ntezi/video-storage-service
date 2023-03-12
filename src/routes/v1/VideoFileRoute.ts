@@ -1,9 +1,9 @@
 import express from 'express';
-import VideoFileController from "../controllers/VideoFileController";
-import VideoFileMiddleware from "../middleware/VideoFileMiddleware";
+import VideoFileController from "../../controllers/v1/VideoFileController";
+import VideoFileMiddleware from "../../middleware/v1/VideoFileMiddleware";
 import {StatusCodes} from "http-status-codes";
-import VideoFileStorage from "../utils/VideoFileHandler";
-import RouteConfig from "../configs/RouteConfig";
+import VideoFileStorage from "../../utils/VideoFileHandler";
+import RouteConfig from "../../configs/RouteConfig";
 
 export class VideoFileRoute extends RouteConfig {
 	constructor(app: express.Application) {

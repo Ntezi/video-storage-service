@@ -9,7 +9,7 @@ import "reflect-metadata";
 import express from 'express';
 import * as path from "path";
 import VideoStorageDataSource from "./configs/db/VideoStorageDataSource";
-import {VideoFileRoute} from "./routes/VideoFileRoute";
+import {VideoFileRoute} from "./routes/v1/VideoFileRoute";
 import RedisClient from "./utils/RedisClient";
 import Logger from "./utils/Logger";
 import ServerConfig from "./configs/ServerConfig";
@@ -23,10 +23,10 @@ const port = process.env.VIDEO_STORAGE_SERVER_PORT || 2207;
 
 routes.push(<RouteConfig>new VideoFileRoute(app));
 
-ServerConfig.createServer(app, path.join(__dirname, '/swagger/api.yaml'))
+ServerConfig.createServer(app, path.join(__dirname, '/swagger/v1/api.yaml'))
 	.then((server) => {
 		server.listen(port, async () => {
-			Logger.info(`Video Storage Server is up and running at http://localhost:${port}`);
+			Logger.info(`Video Storage Server is up and running at ${port}`);
 			routes.forEach((route: RouteConfig) => {
 				Logger.debug(`Video Storage Routes configured for ${route.getName()}`);
 			});

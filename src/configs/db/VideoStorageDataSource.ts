@@ -1,5 +1,5 @@
 import {DataSource} from 'typeorm'
-import {VideoFile} from "../../entities/VideoFile";
+import {VideoFile} from "../../entities/v1/VideoFile";
 
 export default new DataSource({
 	type: "postgres",

@@ -1,10 +1,10 @@
 import express from 'express';
-import CustomResponse from '../utils/CustomResponse'
+import CustomResponse from '../../utils/CustomResponse'
 import {StatusCodes} from 'http-status-codes';
-import {CreateVideoFileDto} from "../dtos/CreateVideoFileDto";
-import VideoFileService from "../services/VideoFileService";
-import HelperFunctions from "../utils/HelperFunctions";
-import VideoFileStorage from "../utils/VideoFileHandler";
+import {CreateVideoFileDto} from "../../dtos/v1/CreateVideoFileDto";
+import VideoFileService from "../../services/v1/VideoFileService";
+import HelperFunctions from "../../utils/HelperFunctions";
+import VideoFileStorage from "../../utils/VideoFileHandler";
 
 class VideoFileController {
 
