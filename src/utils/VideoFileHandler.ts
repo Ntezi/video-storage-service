@@ -12,7 +12,7 @@ interface StoredFile {
 /**
  * A class that encapsulates the file upload and storage logic.
  */
-class VideoFileStorage {
+class VideoFileHandler {
 	/**
 	 * The `multer` middleware to handle single file uploads. The file size limit is 100MB.
 	 */
@@ -22,7 +22,7 @@ class VideoFileStorage {
 	 * Returns the `multer` middleware to handle single file uploads.
 	 * Usage: `VideoFileStorage.singleUpload`
 	 */
-	public singleUpload = VideoFileStorage.upload.single('data');
+	public singleUpload = VideoFileHandler.upload.single('data');
 
 	/**
 	 *  Saves the file to the disk. Returns the file name and size.
@@ -88,4 +88,4 @@ class VideoFileStorage {
 
 }
 
-export default new VideoFileStorage();
+export default new VideoFileHandler();

@@ -4,7 +4,7 @@ import {StatusCodes} from 'http-status-codes';
 import {CreateVideoFileDto} from "../dtos/CreateVideoFileDto";
 import VideoFileService from "../services/VideoFileService";
 import HelperFunctions from "../utils/HelperFunctions";
-import VideoFileStorage from "../utils/VideoFileStorage";
+import VideoFileStorage from "../utils/VideoFileHandler";
 
 class VideoFileController {
 
@@ -60,10 +60,8 @@ class VideoFileController {
 					// Save the file to the file system
 					const {fileName, fileSize} = await VideoFileStorage.saveFile(uploadedFile);
 
-
 					// Create the location header value
 					const createdFileLocation = `${req.protocol}://${req.get('host')}/v1/${fileName}`;
-
 
 					// Set the Location header and return the response
 					res.statusCode = StatusCodes.CREATED;

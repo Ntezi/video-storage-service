@@ -1,9 +1,9 @@
 import express from 'express';
-import {RouteConfig} from "../configs";
 import VideoFileController from "../controllers/VideoFileController";
-import FileMiddleware from "../middleware/FileMiddleware";
+import VideoFileMiddleware from "../middleware/VideoFileMiddleware";
 import {StatusCodes} from "http-status-codes";
-import VideoFileStorage from "../utils/VideoFileStorage";
+import VideoFileStorage from "../utils/VideoFileHandler";
+import RouteConfig from "../configs/RouteConfig";
 
 export class VideoFileRoute extends RouteConfig {
 	constructor(app: express.Application) {
@@ -18,10 +18,10 @@ export class VideoFileRoute extends RouteConfig {
 			.route(`/v1/files`)
 			.get(VideoFileController.getFiles)
 			.post(
-				FileMiddleware.handleBoundary,
+				VideoFileMiddleware.handleBoundary,
 				VideoFileStorage.singleUpload,
-				FileMiddleware.verifyUploadedFiles,
-				FileMiddleware.validateDuplicateFile,
+				VideoFileMiddleware.verifyUploadedFiles,
+				VideoFileMiddleware.validateDuplicateFile,
 				VideoFileController.uploadVideoFile
 			);
 
@@ -32,7 +32,7 @@ export class VideoFileRoute extends RouteConfig {
 		this.app
 			.route(`/v1/files/:fileid`)
 			.all(
-				FileMiddleware.validateFileExists,
+				VideoFileMiddleware.validateFileExists,
 			)
 			.get(VideoFileController.getFileById)
 			.delete(VideoFileController.deleteFile);

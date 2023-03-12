@@ -1,6 +1,6 @@
 import * as redis from "redis";
 import Logger from "./Logger";
-import {HelperFunctions} from "./index";
+import HelperFunctions from "./HelperFunctions";
 
 class RedisClient {
 	private client: redis.RedisClientType | undefined;

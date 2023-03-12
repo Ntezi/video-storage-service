@@ -4,7 +4,7 @@ import {StatusCodes} from "http-status-codes";
 import HelperFunctions from "../utils/HelperFunctions";
 import VideoFileService from "../services/VideoFileService";
 
-class FileMiddleware {
+class VideoFileMiddleware {
 
 	handleBoundary(req: express.Request, res: express.Response, next: express.NextFunction) {
 		const boundary = '----WebKitFormBoundary7MA4YWxkTrZu0gW';
@@ -46,4 +46,4 @@ class FileMiddleware {
 	}
 }
 
-export default new FileMiddleware();
+export default new VideoFileMiddleware();

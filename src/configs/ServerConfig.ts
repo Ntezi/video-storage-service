@@ -61,13 +61,13 @@ class ServerConfig {
 			})
 		);
 
-		// app.use((error: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-		// 	if (error instanceof multer.MulterError) {
-		// 		CustomResponse.returnErrorResponse(res, StatusCodes.UNSUPPORTED_MEDIA_TYPE, error.code)
-		// 	} else {
-		// 		CustomResponse.returnErrorResponse(res, error.status, error.message)
-		// 	}
-		// });
+		app.use((error: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+			if (error instanceof multer.MulterError) {
+				CustomResponse.returnErrorResponse(res, StatusCodes.UNSUPPORTED_MEDIA_TYPE, error.code)
+			} else {
+				CustomResponse.returnErrorResponse(res, error.status, error.message)
+			}
+		});
 
 		return http.createServer(app)
 	}

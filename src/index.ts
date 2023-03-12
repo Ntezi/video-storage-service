@@ -8,10 +8,12 @@ if (dotenvResult.error) {
 import "reflect-metadata";
 import express from 'express';
 import * as path from "path";
-import {Logger, RedisClient} from "./utils";
-import {RouteConfig, ServerConfig} from "./configs";
 import VideoStorageDataSource from "./configs/db/VideoStorageDataSource";
 import {VideoFileRoute} from "./routes/VideoFileRoute";
+import RedisClient from "./utils/RedisClient";
+import Logger from "./utils/Logger";
+import ServerConfig from "./configs/ServerConfig";
+import RouteConfig from "./configs/RouteConfig";
 
 
 const app: express.Application = express();

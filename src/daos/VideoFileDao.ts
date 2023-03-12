@@ -1,10 +1,11 @@
 import {EntityManager,} from "typeorm";
 import Logger from "../utils/Logger";
-import {HelperFunctions, RedisClient} from "../utils";
 import VideoStorageDataSource from "../configs/db/VideoStorageDataSource";
 import {CreateVideoFileDto} from "../dtos/CreateVideoFileDto";
 import {VideoFile} from "../entities/VideoFile";
 import {v4 as uuid} from 'uuid';
+import HelperFunctions from "../utils/HelperFunctions";
+import RedisClient from "../utils/RedisClient";
 
 class VideoFileDao {
 	manager: EntityManager;
