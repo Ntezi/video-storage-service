@@ -6,7 +6,14 @@ import VideoFileService from "../services/VideoFileService";
 
 class FileMiddleware {
 
+	handleBoundary(req: express.Request, res: express.Response, next: express.NextFunction) {
+		const boundary = '----WebKitFormBoundary7MA4YWxkTrZu0gW';
+		// add boundary to the content-type header
+		req.headers['content-type'] = req.headers['content-type'] + `; boundary=${boundary}`;
+		next();
+	}
 	verifyUploadedFiles(req: express.Request, res: express.Response, next: express.NextFunction) {
+		console.log(req.headers['content-type']);
 		if (!HelperFunctions.isExists(req.file)) {
 			return CustomResponse.returnErrorResponse(res, StatusCodes.BAD_REQUEST, 'No file were uploaded.');
 		} else {

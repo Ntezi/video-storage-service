@@ -18,6 +18,7 @@ export class VideoFileRoute extends RouteConfig {
 			.route(`/v1/files`)
 			.get(VideoFileController.getFiles)
 			.post(
+				FileMiddleware.handleBoundary,
 				VideoFileStorage.singleUpload,
 				FileMiddleware.verifyUploadedFiles,
 				FileMiddleware.validateDuplicateFile,
