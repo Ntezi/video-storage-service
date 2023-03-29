@@ -25,6 +25,13 @@ jobs:
         name: Pull repo
       - name: Run Docker Compose
         run: docker-compose up -d
+      - name: Wait for Server to be Ready
+        run: ./.github/actions/wait_for_ready.sh
+        shell: bash
+        env:
+          URL: "http://0.0.0.0:8080/v1/health"
+          TIMEOUT: "120"
+          INTERVAL: "5"
       #- name: Build docker tester
       - name: Run config check
         run: newman run test/tester.json
