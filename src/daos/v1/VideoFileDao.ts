@@ -1,6 +1,6 @@
 import {EntityManager,} from "typeorm";
 import Logger from "../../utils/Logger";
-import VideoStorageDataSource from "../../configs/db/VideoStorageDataSource";
+import {VideoStorageDataSource} from "../../configs/db/VideoStorageDataSource";
 import {CreateVideoFileDto} from "../../dtos/v1/CreateVideoFileDto";
 import {VideoFile} from "../../entities/v1/VideoFile";
 import {v4 as uuid} from 'uuid';

@@ -1,7 +1,8 @@
-import {DataSource} from 'typeorm'
+import {DataSourceOptions, DataSource, createConnection} from 'typeorm'
 import {VideoFile} from "../../entities/v1/VideoFile";
 
-export default new DataSource({
+
+export const videoStorageDataSourceOptions: DataSourceOptions = {
 	type: "postgres",
 	host: process.env.DB_HOST,
 	port: Number(process.env.DB_PORT) || 5432,
@@ -29,4 +30,7 @@ export default new DataSource({
 		ignoreErrors: true
 
 	}
-});
+};
+
+export const VideoStorageDataSource = new DataSource(videoStorageDataSourceOptions);
+

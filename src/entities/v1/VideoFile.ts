@@ -1,9 +1,8 @@
-
-import {Entity, Column, CreateDateColumn, PrimaryColumn} from "typeorm";
+import {Entity, Column, CreateDateColumn, PrimaryColumn} from 'typeorm';
 
 @Entity('video_file')
 export class VideoFile {
-	@PrimaryColumn({nullable: false, type: "uuid"})
+	@PrimaryColumn({nullable: false, type: 'uuid'})
 	file_id!: string;
 
 	@Column({nullable: false, type: 'varchar', length: 255})
@@ -12,7 +11,6 @@ export class VideoFile {
 	@Column({nullable: false, type: 'int'})
 	size!: number;
 
-	@Column({nullable: false, type: 'varchar', length: 255})
-	@CreateDateColumn()
+	@CreateDateColumn({nullable: false, type: 'varchar', length: 255})
 	created_at!: Date;
 }

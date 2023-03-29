@@ -146,7 +146,7 @@ The project is structured as follows:
 │   │   ├── Logger.ts                       # Logger for the application (TypeScript)
 │   │   ├── Redisclient.ts                  # Redis client for the application (TypeScript)
 │   │   └── VideoFileHandler.ts             # Handler for video file operations such as upload, download, delete (TypeScript)                                              
-├── test                                   # Test files for the application (TypeScript)
+├── test                                    # Test files for the application (TypeScript)
 │   └── tester.json                         # Postman collection for testing the API endpoints
 ├── .dockerignore                           # Docker ignore file for the application
 ├── .gitignore                              # Git ignore file for the application

@@ -8,7 +8,7 @@ if (dotenvResult.error) {
 import "reflect-metadata";
 import express from 'express';
 import * as path from "path";
-import VideoStorageDataSource from "./configs/db/VideoStorageDataSource";
+import {VideoStorageDataSource} from "./configs/db/VideoStorageDataSource";
 import {VideoFileRoute} from "./routes/v1/VideoFileRoute";
 import RedisClient from "./utils/RedisClient";
 import Logger from "./utils/Logger";

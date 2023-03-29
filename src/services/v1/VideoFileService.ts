@@ -27,6 +27,8 @@ class VideoFileService implements CrudInterface {
 		const videoFile = await VideoFileDao.getFile(fileId);
 		if (HelperFunctions.isExists(videoFile)) {
 			return this.getFileObject(videoFile);
+		} else {
+			return null;
 		}
 	}
 
@@ -34,6 +36,8 @@ class VideoFileService implements CrudInterface {
 		const videoFile = await VideoFileDao.getVideoFileByName(fileName) as unknown as VideoFileDto;
 		if (HelperFunctions.isExists(videoFile)) {
 			return this.getFileObject(videoFile);
+		} else {
+			return null;
 		}
 	}
 
