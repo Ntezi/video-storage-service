@@ -115,6 +115,6 @@ To view the Swagger UI:
 - Go to http://localhost:8080
 
 ## Developer
-Marius Ngaboyamahina, Senior Software Engineer at [WiredIn](https://wiredin.rw/)
+Marius Ngaboyamahina, Senior Software Engineer
 LinkedIn: [Marius Ngaboyamahina](https://www.linkedin.com/in/ntezi/)
 
